@@ -575,8 +575,8 @@ pub trait CardMgmtOps {
     /// Initialises the Card Management System
     fn init_cms(&mut self) -> Result<()>;
 
-    // Waits roughly `us` microseconds to allow readings to be populated while polling the status
-    // register every 1µs. Returns the elapsed microseconds.
+    /// Waits roughly `us` microseconds to allow readings to be populated while polling the status
+    /// register every 1µs. Returns the elapsed microseconds.
     fn expect_ready_host_status(&self, us: usize) -> Result<usize>;
 
     /// Enables HBM temperature monitoring
@@ -708,10 +708,10 @@ mod test {
             .into_iter()
             .collect(),
         );
-        let card_info =
-            CardInfo::try_from(card_info_bytes.as_slice()).expect("cannot parse card info bytes");
-        debug!("{:?}", card_info);
-        assert_eq!(card_info, expected_card_info);
+        assert_eq!(
+            CardInfo::try_from(card_info_bytes.as_slice()),
+            Ok(expected_card_info)
+        );
     }
 
     #[test]
